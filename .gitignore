@@ -1,0 +1,64 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+
+# Django specific
+*.pyc
+*.sqlite3
+db.sqlite3
+*.log
+*.pot
+*.mo
+
+
+# Virtual Environments
+venv/
+env/
+ENV/
+.venv/
+.Python
+
+# VS Code (optional)
+.vscode/
+
+# PyCharm (optional)
+.idea/
+
+# Django static/media files (if generated locally)
+staticfiles/
+media/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env variables / secrets
+.env
+*.env
+
+# Migrations (optional, if you don't want to track them)
+# Comment out if you want to track migrations
+# **/migrations/*.py
+# **/migrations/*.pyc
+
+# Coverage / testing
+htmlcov/
+coverage.xml
+*.cover
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+
+# Celery beat schedule file
+celerybeat-schedule
+
+# Docker
+*.pid
+
+# Others (optional)
+__pypackages__/
