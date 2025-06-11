@@ -21,5 +21,5 @@ RUN chmod +x /app/setup.sh
 ENTRYPOINT ["/app/setup.sh"]
 
 # docker build -t my-django-app .
-# docker-compose up --build
-# docker compose exec web bash
+# docker compose --env-file .env  up --build
+# docker compose --env-file .env exec web bash

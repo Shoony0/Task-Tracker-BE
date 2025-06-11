@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.contrib.auth.hashers import make_password
 
 
 from .models import User, Role
@@ -16,11 +17,17 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username','email', 'first_name', 'last_name', 'roles', 'role_ids']
+        fields = ['id', 'username','email', 'first_name', 'last_name', 'roles', 'role_ids', 'password']
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
 
     def to_internal_value(self, data):
         # Rewrite 'email' input to 'username' to keep compatibility
         if "email" in data:
             data['username'] = data['email']
+
+        if "password" in data:
+            data['password'] = make_password(data['password'])
             
         return super().to_internal_value(data)
