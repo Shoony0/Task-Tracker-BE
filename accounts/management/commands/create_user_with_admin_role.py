@@ -8,7 +8,7 @@ class Command(BaseCommand):
     help = 'Create a user and assign the "admin" role'
 
     def add_arguments(self, parser):
-        parser.add_argument('--email', type=str, default='admin@gmail.com')
+        parser.add_argument('--email', type=str, default='admin@tracker.com')
         parser.add_argument('--password', type=str, default='admin123')
 
     def handle(self, *args, **options):
@@ -30,9 +30,9 @@ class Command(BaseCommand):
         if created:
             user.set_password(password)
             user.save()
-            self.stdout.write(self.style.SUCCESS(f'User created: {username} / {password}'))
+            self.stdout.write(self.style.SUCCESS(f'User created: {email} / {password}'))
         else:
-            self.stdout.write(self.style.WARNING(f'User "{username}" already exists'))
+            self.stdout.write(self.style.WARNING(f'User "{email}" already exists'))
 
         user.roles.add(admin_role)
-        self.stdout.write(self.style.SUCCESS(f'Assigned "admin" role to {username}'))
+        self.stdout.write(self.style.SUCCESS(f'Assigned "admin" role to {email}'))
