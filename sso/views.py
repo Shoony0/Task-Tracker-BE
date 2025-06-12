@@ -1,3 +1,4 @@
+import os
 import urllib.parse
 from django.http import HttpResponseRedirect
 from django.conf import settings
@@ -95,9 +96,9 @@ def google_callback(request):
             "status": "error",
             "message": "User is not exists with 'Task Tracker' System. please contact to admin e.g. admin@tracker.com"
         }
-    cache.set(response_token, cache_data, timeout=5) # 5 sec
+    cache.set(response_token, cache_data, timeout=10) # 10 sec
 
-    return HttpResponseRedirect(f"http://localhost:3000/sso/?status=success&token={response_token}")
+    return HttpResponseRedirect(f"{os.getenv('FRONTEND_URI')}/sso/?status=success&token={response_token}")
 
 @swagger_auto_schema(
     method='post',

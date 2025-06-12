@@ -3,7 +3,9 @@ FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-WORKDIR /app
+RUN mkdir -p /app/src
+
+WORKDIR /app/src/
 
 # Install system dependencies required to build mysqlclient
 RUN apt-get update \
@@ -11,14 +13,16 @@ RUN apt-get update \
     && apt-get clean
 
 # Install Python dependencies
-COPY requirements.txt /app/
+COPY requirements.txt /app/src/
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-COPY . /app/
+COPY . /app/src/
 
-RUN chmod +x /app/setup.sh
-ENTRYPOINT ["/app/setup.sh"]
+RUN ls -la
+
+RUN chmod +x /app/src/setup.sh
+ENTRYPOINT ["/app/src/setup.sh"]
 
 # docker build -t my-django-app .
 # docker compose --env-file .env  up --build
