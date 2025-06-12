@@ -181,9 +181,7 @@ GOOGLE_REDIRECT_URI = os.getenv("GOOGLE_REDIRECT_URI")
 GOOGLE_SCOPES = ["openid", "email", "profile", "https://www.googleapis.com/auth/drive.metadata.readonly", "https://www.googleapis.com/auth/calendar.readonly"]
 
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-]
+CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_CREDENTIALS = True
 
