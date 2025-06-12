@@ -63,25 +63,43 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
 
     def get_queryset(self):
+        """
+        Role-based filtering logic for project listing.
+        Admin users see all projects.
+        Non-admin users see only projects where they are assigned.
+        """
         request_user_role = self.request.user.roles.values_list("name", flat=True)
-        if Role.ADMIN in request_user_role: 
+        if Role.ADMIN in request_user_role:  # admin has full access to all projects
             return super().get_queryset()
         
+        # Non-admin users can only access projects assigned to them
         return self.request.user.projects.all()
 
     def get_permissions(self):
+        """
+        Dynamically assign permissions based on request type.
+        """
+        # Allow read-only access to Admin, TaskCreator, and ReadOnly users
         if self.request.method == "GET":
             return [IsAuthenticated(), IsReadOnlyOrAdminOrTaskCreator()]
+        # Write operations restricted to Admin only
         return [IsAuthenticated(), IsAdmin()]
     
     def perform_create(self, serializer):
+        # Auto-assign the current user as project owner on creation.
         serializer.save(owner=self.request.user)
 
 
 
     @action(detail=True, methods=['get'])
     def tasks(self, request, pk):
+        """
+        Custom action to list tasks under a specific project.
+        URL: /projects/{id}/tasks/
+        """
+        # Fetch project by ID
         project = Project.objects.get(id=pk)
+        # Fetch all tasks associated with this project
         tasks = project.task_set.all()
         tasks_serializer = TaskSerializer(tasks, many=True)
         return Response(tasks_serializer.data)
