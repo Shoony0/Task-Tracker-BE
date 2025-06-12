@@ -11,6 +11,53 @@ from rest_framework.response import Response
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for managing Project objects.
+
+    This ViewSet provides CRUD operations on Project instances with role-based access control,
+    dynamic queryset filtering based on the user's role, and additional project-specific actions.
+
+    Permissions:
+        - GET (list/retrieve):
+            - Requires authentication (`IsAuthenticated`)
+            - Requires one of the roles: `IsReadOnlyOrAdminOrTaskCreator`
+        - POST, PUT, PATCH, DELETE:
+            - Requires authentication (`IsAuthenticated`)
+            - Requires `IsAdmin` role.
+
+    Queryset Filtering:
+        - If the requesting user has 'admin' role, return all projects.
+        - Otherwise, return only projects where the user is assigned.
+
+    Endpoints:
+        - GET /projects/ : List projects.
+        - POST /projects/ : Create a new project.
+        - GET /projects/{id}/ : Retrieve a specific project.
+        - PUT /projects/{id}/ : Update a project.
+        - PATCH /projects/{id}/ : Partially update a project.
+        - DELETE /projects/{id}/ : Delete a project.
+        - GET /projects/{id}/tasks/ : Retrieve all tasks assigned to a specific project.
+
+    Methods:
+        - get_queryset(): Dynamically filters queryset based on user role.
+        - get_permissions(): Dynamically assigns permissions based on request method.
+        - perform_create(): Automatically assigns the current user as the project owner during creation.
+        - tasks(): Custom action to fetch tasks for a given project.
+
+    Example (Custom Action - Get tasks for a project):
+        Request:
+            GET /projects/5/tasks/
+        Response:
+            [
+                {
+                    "id": 101,
+                    "name": "Task 1",
+                    "description": "...",
+                    ...
+                },
+                ...
+            ]
+    """
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
 
