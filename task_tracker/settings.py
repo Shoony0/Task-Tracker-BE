@@ -130,6 +130,13 @@ CACHES = {
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "SSL": True,
+            "SOCKET_CONNECT_TIMEOUT": 5,  # seconds
+            "SOCKET_TIMEOUT": 5,  # seconds
+            "CONNECTION_POOL_KWARGS": {
+                "max_connections": 100,
+                "retry_on_timeout": True,
+            },
+            "IGNORE_EXCEPTIONS": True,  # Prevent cache errors from crashing Django
         }
     }
 }
