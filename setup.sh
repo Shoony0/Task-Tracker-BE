@@ -12,5 +12,5 @@ python manage.py create_roles
 python manage.py create_user_with_admin_role 
 
 echo "🚀 Starting Gunicorn server..."
-gunicorn task_tracker.wsgi:application --bind 0.0.0.0:8000 -w 3
+gunicorn task_tracker.wsgi:application --bind 0.0.0.0:8000 -w 3 --timeout 120
 

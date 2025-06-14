@@ -125,8 +125,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-        "LOCATION": "cache-data",
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.getenv("REDIS_URL"),  # DB 1 in Redis
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
     }
 }
 
@@ -145,7 +148,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -185,5 +189,13 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_CREDENTIALS = True
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
+# REST_FRAMEWORK = {
+#     'DEFAULT_THROTTLE_CLASSES': [
+#         'rest_framework.throttling.UserRateThrottle',
+#         'rest_framework.throttling.AnonRateThrottle',
+#     ],
+#     'DEFAULT_THROTTLE_RATES': {
+#         'user': '10/minute',
+#         'anon': '5/minute',
+#     }
+# }

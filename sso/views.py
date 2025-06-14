@@ -226,7 +226,9 @@ def sso_token_data(request):
     serializer.is_valid(raise_exception=True)
 
     token = serializer.validated_data["token"]
-    token_data = cache.get(token, {})
+    token_data = cache.get(token)
+    if token_data is None:
+        return Response({"message": ["Token is missing. please try again"]}, status=status.HTTP_404_NOT_FOUND)
     # The temporary token is deleted from cache after first use to ensure one-time usage.
     # other wise if user  didn't use after 10 sec it will expire
     cache.delete(token)
