@@ -129,6 +129,7 @@ CACHES = {
         "LOCATION": os.getenv("REDIS_URL"),  # DB 1 in Redis
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "SSL": True,
         }
     }
 }
