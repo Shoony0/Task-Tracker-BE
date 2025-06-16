@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG") == "1"
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['tracker.nanha.link', "localhost"]
 
 
 # Application definition
@@ -157,7 +157,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -171,7 +171,16 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
-    ]
+    ],
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.UserRateThrottle',
+        'rest_framework.throttling.AnonRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'user': '20/minute',
+        'anon': '10/minute',
+    },
+    'EXCEPTION_HANDLER': 'task_tracker.utils.custom_exception_handler',
 }
 
 # JWT Settings
@@ -193,17 +202,14 @@ GOOGLE_REDIRECT_URI = os.getenv("GOOGLE_REDIRECT_URI")
 GOOGLE_SCOPES = ["openid", "email", "profile", "https://www.googleapis.com/auth/drive.metadata.readonly", "https://www.googleapis.com/auth/calendar.readonly"]
 
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "https://tracker.nanha.link",
+    "http://tracker.nanha.link",
+    "http://localhost:3000",
+    "http://localhost:8000",
+]
 
 CORS_ALLOW_CREDENTIALS = True
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_THROTTLE_CLASSES': [
-#         'rest_framework.throttling.UserRateThrottle',
-#         'rest_framework.throttling.AnonRateThrottle',
-#     ],
-#     'DEFAULT_THROTTLE_RATES': {
-#         'user': '10/minute',
-#         'anon': '5/minute',
-#     }
-# }
+CSRF_COOKIE_SECURE = True
+

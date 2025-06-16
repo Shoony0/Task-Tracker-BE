@@ -38,6 +38,7 @@ services:
     ports:
       - "8000:8000"
     depends_on:
+      # - db
       - redis
     environment:
       - DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}

@@ -30,6 +30,7 @@ ENV/
 
 # Django static/media files (if generated locally)
 staticfiles/
+static/
 media/
 
 # OS

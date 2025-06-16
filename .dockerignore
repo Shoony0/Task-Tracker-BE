@@ -8,6 +8,7 @@ __pycache__/
 .gitignore
 .vscode
 .idea
+static/
 staticfiles/
 media/
 venv/
