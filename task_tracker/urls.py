@@ -14,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from .views import health
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
@@ -41,8 +42,8 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),  # <- Allow public access to Swagger
 )
 
-
 urlpatterns = [
+    path('', health, name="health"),
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/', include("sso.urls")),
