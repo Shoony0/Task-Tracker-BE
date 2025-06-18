@@ -68,6 +68,9 @@ class ProjectViewSet(viewsets.ModelViewSet):
         Admin users see all projects.
         Non-admin users see only projects where they are assigned.
         """
+        if getattr(self, 'swagger_fake_view', False):
+            return Project.objects.none() 
+    
         request_user_role = self.request.user.roles.values_list("name", flat=True)
         if Role.ADMIN in request_user_role:  # admin has full access to all projects
             return super().get_queryset()

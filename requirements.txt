@@ -13,5 +13,5 @@ oauthlib==3.2.2
 gunicorn==23.0.0
 cryptography==45.0.4
 django-redis==5.4.0
-mysqlclient
+# mysqlclient
 pymysql

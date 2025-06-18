@@ -3,7 +3,7 @@ FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-RUN mkdir -p /app/src
+RUN mkdir -p /app
 
 WORKDIR /app
 
@@ -13,8 +13,7 @@ RUN apt-get update \
     && apt-get clean
 
 # Install Python dependencies
-COPY requirements.txt /app
-RUN pip install --upgrade pip
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY . .
@@ -22,8 +21,8 @@ COPY . .
 # Expose port
 EXPOSE 8000
 
-RUN chmod +x /appsetup.sh
-ENTRYPOINT ["/appsetup.sh"]
+RUN chmod +x /app/setup.sh
+ENTRYPOINT ["/app/setup.sh"]
 
 # docker build -t my-django-app .
 # docker compose --env-file .env  up --build

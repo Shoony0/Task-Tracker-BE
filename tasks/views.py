@@ -66,6 +66,9 @@ class TaskViewSet(viewsets.ModelViewSet):
 
 
     def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return Task.objects.none() 
+        
         request_user_role = self.request.user.roles.values_list("name", flat=True)
         # Full access to all tasks.
         if Role.ADMIN in request_user_role: 

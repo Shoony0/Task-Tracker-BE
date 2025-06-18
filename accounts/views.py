@@ -6,7 +6,9 @@ from .serializers import UserSerializer, RoleSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from drf_yasg.utils import swagger_auto_schema
 
+@swagger_auto_schema(tags=["Tasks"])
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint for managing User objects.
