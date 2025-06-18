@@ -167,15 +167,15 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
-    'DEFAULT_THROTTLE_CLASSES': [
-        'rest_framework.throttling.UserRateThrottle',
-        'rest_framework.throttling.AnonRateThrottle',
-    ],
-    'DEFAULT_THROTTLE_RATES': {
-        'user': '20/minute',
-        'anon': '10/minute',
-    },
-    'EXCEPTION_HANDLER': 'task_tracker.utils.custom_exception_handler',
+    # 'DEFAULT_THROTTLE_CLASSES': [
+    #     'rest_framework.throttling.UserRateThrottle',
+    #     'rest_framework.throttling.AnonRateThrottle',
+    # ],
+    # 'DEFAULT_THROTTLE_RATES': {
+    #     'user': '20/minute',
+    #     'anon': '10/minute',
+    # },
+    # 'EXCEPTION_HANDLER': 'task_tracker.utils.custom_exception_handler',
 }
 
 # JWT Settings

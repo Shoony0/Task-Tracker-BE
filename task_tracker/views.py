@@ -5,6 +5,16 @@ from rest_framework.permissions import AllowAny
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def health(request):
+    """
+    Health check endpoint.
+
+    Returns a 200 OK response with a message indicating that the Django server
+    is up and running. This endpoint requires no authentication and can be used
+    for load balancer health checks, uptime monitoring, or readiness probes.
+
+    Returns:
+        Response: A JSON response with a simple status message.
+    """
     return Response({
         "message": "Django Server up and running."
     }, 200)
