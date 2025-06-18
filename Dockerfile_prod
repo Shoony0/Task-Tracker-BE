@@ -38,7 +38,7 @@ RUN mkdir -p /tmp/project && \
     mv manage.py /tmp/project/ && \
     mv setup.sh /tmp/project/ && \
     rm -rf * && \
-    rm .dockerignore && \
+    rm .dockerignore .env.sample && \
     mv /tmp/project/* . && \
     mv /tmp/project/.env . && \
     rm -r /tmp/project
