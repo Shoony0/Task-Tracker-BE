@@ -5,7 +5,7 @@ ENV PYTHONUNBUFFERED 1
 
 RUN mkdir -p /app/src
 
-WORKDIR /app/src/
+WORKDIR /app
 
 # Install system dependencies required to build mysqlclient
 RUN apt-get update \
@@ -13,16 +13,17 @@ RUN apt-get update \
     && apt-get clean
 
 # Install Python dependencies
-COPY requirements.txt /app/src/
+COPY requirements.txt /app
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-COPY . /app/src/
+COPY . .
 
-RUN ls -la
+# Expose port
+EXPOSE 8000
 
-RUN chmod +x /app/src/setup.sh
-ENTRYPOINT ["/app/src/setup.sh"]
+RUN chmod +x /appsetup.sh
+ENTRYPOINT ["/appsetup.sh"]
 
 # docker build -t my-django-app .
 # docker compose --env-file .env  up --build
